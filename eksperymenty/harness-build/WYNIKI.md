@@ -55,6 +55,10 @@ Po utworzeniu przez właściciela pustego repozytorium `Testing123/testrepo` w z
 
 Obserwacja jakościowa: agent sam założył lokalny venv dla pytest, obsłużył przypadki brzegowe w testach ponad minimum z zadania i napisał opisowy komunikat commita.
 
+## Zamknięcie eksperymentu (2026-09-06)
+
+Decyzją właściciela instancja Harness Open Source została wyłączona (kontener `harness-eksperyment` usunięty; obraz `harness-eksperyment:local` i dane w `/tmp/harness-data` pozostają do ewentualnego ponownego uruchomienia). LiteLLM pozostaje uruchomiony na potrzeby kolejnego eksperymentu (Forgejo, gałąź `eksperyment/forgejo`).
+
 ## Wnioski dla planu
 
 1. Ścieżka LiteLLM → MiniMax-M3 jest zdatna do dalszych kroków fazy 1; konfiguracja połączenia z tego eksperymentu może być punktem wyjścia zamrożonej konfiguracji kroku 4.

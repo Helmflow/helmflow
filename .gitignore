@@ -28,4 +28,5 @@ node_modules/
 # Sekrety i konfiguracja lokalna
 .env
 .env.*
+!.env.example
 *.local

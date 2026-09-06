@@ -1,0 +1,21 @@
+services:
+  forgejo:
+    image: codeberg.org/forgejo/forgejo:13
+    container_name: forgejo-eksperyment
+    ports:
+      - "127.0.0.1:3000:3000"
+    environment:
+      # Pomija kreator instalacji — konfiguracja w pełni z env, bez ekranu setup.
+      - FORGEJO__security__INSTALL_LOCK=true
+      - FORGEJO__server__ROOT_URL=http://127.0.0.1:3000/
+      - FORGEJO__server__DOMAIN=127.0.0.1
+      - FORGEJO__database__DB_TYPE=sqlite3
+      # Zamknięta rejestracja: jedyne konto to lokalny admin tworzony w setup.sh.
+      - FORGEJO__service__DISABLE_REGISTRATION=true
+      # Zero telemetrii/aktualizacji przez sieć.
+      - FORGEJO__cron.update_checker__ENABLED=false
+    volumes:
+      - forgejo-data:/data
+
+volumes:
+  forgejo-data:

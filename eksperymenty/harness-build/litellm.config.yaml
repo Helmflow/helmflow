@@ -1,8 +1,10 @@
 model_list:
   - model_name: helmflow-default
     litellm_params:
-      model: openai/MiniMax-M3
-      api_base: https://api.minimax.io/v1
+      # Oficjalny (rekomendowany przez MiniMax) endpoint zgodny z API Anthropic;
+      # LiteLLM tłumaczy żądania OpenAI-format klientów na format Anthropic.
+      model: anthropic/MiniMax-M3
+      api_base: https://api.minimax.io/anthropic
       api_key: os.environ/MINIMAX_API_KEY
 
 litellm_settings:

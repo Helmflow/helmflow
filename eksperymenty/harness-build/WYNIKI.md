@@ -41,6 +41,20 @@ Agent, zwalniając port 3000, **zatrzymał istniejący na hoście kontener `harn
 
 Po zakończeniu przebiegu, decyzją właściciela, trasę LiteLLM przełączono z endpointu zgodnego z OpenAI na **oficjalny, rekomendowany przez MiniMax endpoint zgodny z API Anthropic** (`https://api.minimax.io/anthropic`, `anthropic/MiniMax-M3`). Test dymny po przełączeniu: odpowiedź tekstowa i tool calling poprawne; dodatkowa obserwacja — w formacie Anthropic treść przychodzi bez wtrąconych bloków `<think>` (rozumowanie niesione osobno), co upraszcza obsługę po stronie klienta. Sam przebieg budowy harness/harness wykonano jeszcze na trasie OpenAI-zgodnej; wyniki pozostają ważne, a zmiana trasy nie wymagała żadnych zmian w agencie — dokładnie to zadanie warstwy wymienności LiteLLM ([D5.2](../../docs/decyzje.md)).
 
+## Przebieg 2: agent zasila repozytorium w lokalnym Harness (2026-09-06)
+
+Po utworzeniu przez właściciela pustego repozytorium `Testing123/testrepo` w zbudowanej instancji, agent otrzymał drugie zadanie (`zadanie2.md`): sklonować je, zbudować kompletny projekt Pythona i wypchnąć. **Ten przebieg szedł już w całości przez endpoint zgodny z API Anthropic** — walidując tool calling także na trasie oficjalnej.
+
+| Metryka | Wartość |
+|---|---|
+| Iteracje / tokeny | 21 / 106 608 wej. + 6 130 wyj. |
+| Rezultat | pakiet `licznik` (moduł + CLI `python -m licznik`), 10 testów pytest — 10/10 PASSED, README, pyproject, .gitignore |
+| Commit | `f69bb52` autorstwa `Agent Eksperymentu <agent@helmflow.local>`, wypchnięty na `main` |
+| Weryfikacja niezależna | `git ls-remote` (ref main = f69bb52), API repozytorium: commit i pliki widoczne |
+| Uwierzytelnienie git | osobisty token wygenerowany przez API (hasło konta nie działa dla gita w Gitness); token w `.env`, poza repo; agent poinstruowany, by nie wypisywać jego wartości — i tego przestrzegał |
+
+Obserwacja jakościowa: agent sam założył lokalny venv dla pytest, obsłużył przypadki brzegowe w testach ponad minimum z zadania i napisał opisowy komunikat commita.
+
 ## Wnioski dla planu
 
 1. Ścieżka LiteLLM → MiniMax-M3 jest zdatna do dalszych kroków fazy 1; konfiguracja połączenia z tego eksperymentu może być punktem wyjścia zamrożonej konfiguracji kroku 4.
